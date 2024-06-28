@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 const router = express.Router();
 
 
-const users = [
+let users = [
     {   
         id: uuidv4(),
         firstName: "Diallo",
@@ -23,7 +23,7 @@ const users = [
 
 router.get('/', (req, res) => {
 
-    console.log(users);
+    //console.log(users);
     res.send(users);
 })
 
@@ -36,6 +36,25 @@ router.post('/', (req, res) => {
     users.push({id:uuidv4(), ...user})
     //console.log(users);
     res.send(users)
+})
+
+
+
+router.get('/:id', (req, res)=> {
+    const {id}  = req.params
+    const user = users.find((user) => user.id == id)
+    res.send(user);
+})
+
+
+router.delete('/:id', (req, res) => {
+    const {id} = req.params
+
+    const user = users.find((user) => user.id ==id)
+
+    users = users.filter((user) => user.id != id)
+    console.log(users);
+    res.send(user)
 })
 
 
